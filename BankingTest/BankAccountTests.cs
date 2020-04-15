@@ -1,46 +1,54 @@
 ﻿using BankingDomain;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Xunit;
 
 namespace BankingTest
 {
    public class BankAccountTests
     {
+        BankAccount Account;
+        decimal OpeningBalance;
+        public BankAccountTests()
+        {
+            Account = new BankAccount(new DummyBonusCalculator());
+            OpeningBalance = Account.GetBalance();
+        }
         [Fact]
         public void NewAccountsHaveAppropriateBalance()
         {
             //write the code you wish you had (WTCYWYH) (Corey Haines)
-            BankAccount account = new BankAccount();
-            decimal balance = account.GetBalance();
-            Assert.Equal(1200M, balance);
+           
+            Assert.Equal(1200M, OpeningBalance);
         }
 
         [Fact]
         public void DepositingIncreasesBalance()
         {
-            //(Arrange) Given - I have a new account and I have the balance af that account
-            var account = new BankAccount();
-            var openingBalance = account.GetBalance();
+            //(Arrange) Given - I have a new account and I have the balance af that account     
             var amountToDeposit = 100M;
             //(Act) when I deposit $100
-            account.Deposit(amountToDeposit);
+            Account.Deposit(amountToDeposit);
             //(Assert) Then the accounts balance should be the opening balance plus 100 
-            Assert.Equal(openingBalance + amountToDeposit, account.GetBalance());
+            Assert.Equal(OpeningBalance + amountToDeposit, Account.GetBalance());
         }
-
+   
         [Fact]
         public void WithdrawalDecreaseBalance()
         {
-            var account = new BankAccount();
-            var openingBalance = account.GetBalance();
+           
             var amountToWithdraw = 100M;
             //(Act) when I deposit $100
-            account.Withdraw(amountToWithdraw);
+            Account.Withdraw(amountToWithdraw);
             //(Assert) Then the accounts balance should be the opening balance plus 100 
-            Assert.Equal(openingBalance - amountToWithdraw, account.GetBalance());
+            Assert.Equal(OpeningBalance - amountToWithdraw, Account.GetBalance());
 
+        }
+    }
+
+    public class DummyBonusCalculator : ICalculateAccountBonuses
+    {
+        public decimal GetDepositBonusFor(decimal balance, decimal amountToDeposit)
+        {
+            return 0;
         }
     }
 }
