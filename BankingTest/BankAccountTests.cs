@@ -10,7 +10,8 @@ namespace BankingTest
         decimal OpeningBalance;
         public BankAccountTests()
         {
-            Account = new BankAccount(new Mock<ICalculateAccountBonuses>().Object);
+            Account = new BankAccount(new Mock<ICalculateAccountBonuses>().Object, 
+                new Mock<INotifyTheFeds>().Object);
             OpeningBalance = Account.GetBalance();
         }
         [Fact]

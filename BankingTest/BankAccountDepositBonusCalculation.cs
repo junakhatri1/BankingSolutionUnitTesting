@@ -20,7 +20,7 @@ namespace BankingTest
 
             //Given
             var stubbedCalculator = new Mock<ICalculateAccountBonuses>();
-            var account = new BankAccount(stubbedCalculator.Object);
+            var account = new BankAccount(stubbedCalculator.Object, null);
             var openingBalance = account.GetBalance();
            stubbedCalculator.Setup(r => r.GetDepositBonusFor(openingBalance, amountToDeposit)).Returns(expected);
 
